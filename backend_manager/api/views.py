@@ -116,7 +116,7 @@ def add_photo(request):
 
 
 def get_dalle_painting(prompt: str):
-    openai.api_key = "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"
+    openai.api_key = "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"
 
     response = openai.Image.create(
         prompt=prompt,

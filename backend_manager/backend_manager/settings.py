@@ -31,7 +31,8 @@ DEBUG = (not deploy)
 ALLOWED_HOSTS = []
 
 if (deploy):
-    ALLOWED_HOSTS = ['morrisboers.pythonanywhere.com', '127.0.0.1']
+    ALLOWED_HOSTS = [
+        'thenewmuseumexperience-morrisboers.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
