@@ -15,6 +15,13 @@ import openai
 import random
 import json
 from django.db.models import Q
+import environ
+from datetime import timedelta
+from django.utils import timezone
+
+# init environment
+env = environ.Env()
+environ.Env.read_env()
 
 # Create your views here.
 
@@ -29,7 +36,9 @@ def get_photos_user(request, user):
 @api_view(['GET'])
 def get_all_dalle_creations(request):
     dalle_creations = Photo.objects.filter(~Q(dalle=None))
-    serializer = PhotoSerializer(dalle_creations, many=True)
+    half_an_hour_ago = timezone.now() - timedelta(hours=0, minutes=40)
+    last_dalle_creations = dalle_creations.filter(date__gte=half_an_hour_ago)
+    serializer = PhotoSerializer(last_dalle_creations, many=True)
     return Response(serializer.data)
 
 
@@ -131,7 +140,8 @@ def add_photo(request):
 
 
 def get_dalle_painting(prompt: str):
-    openai.api_key = "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"
+    key = env('API_KEY_DALLE')
+    openai.api_key = key
 
     response = openai.Image.create(
         prompt=prompt,
@@ -176,7 +186,7 @@ def create_art(request, user):
         photo=None,
         dalle=image_url,
         prompt=prompt,
-        date=datetime.datetime.now()
+        date=timezone.now()
     )
     serializer = PhotoSerializer(photo, many=False)
 

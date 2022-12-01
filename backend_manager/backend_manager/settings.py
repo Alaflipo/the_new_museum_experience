@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+
+# init environment
+env = environ.Env()
+environ.Env.read_env()
 
 deploy = False
 
@@ -23,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2o@a1m-82mjkc7x$rqz+amcxh)&r%a4o75w3m)ds1brfm5bmm5'
+SECRET_KEY = env('SECRET_DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (not deploy)
@@ -92,9 +97,9 @@ WSGI_APPLICATION = 'backend_manager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'museum',
-        'USER': 'root',
-        'PASSWORD': 'Achter30?',
+        'NAME': env('MACHINE_DB_NAME'),
+        'USER': env('MACHINE_DB_USER'),
+        'PASSWORD': env('MACHINE_DB_PW'),
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -104,9 +109,9 @@ if (deploy):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'morrisboers$museum',
-            'USER': 'morrisboers',
-            'PASSWORD': 'Achter30?',
+            'NAME': env('DEPLOY_DB_NAME'),
+            'USER': env('DEPLOY_DB_USER'),
+            'PASSWORD': env('DEPLOY_DB_PW'),
             'HOST': 'morrisboers.mysql.pythonanywhere-services.com',
             'PORT': '',
         }

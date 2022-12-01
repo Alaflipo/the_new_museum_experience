@@ -28,8 +28,6 @@ const DalleGallery = () => {
         return user ? user.name : "Unknown";
     };
 
-    let size = 10;
-
     return (
         <ImageList
             sx={{
