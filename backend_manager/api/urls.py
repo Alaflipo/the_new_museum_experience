@@ -10,10 +10,13 @@ urlpatterns = [
     path('photo/delete/<str:id>', views.delete_photo, name='delete-photo'),
     path('museum_image/<str:image>',
          views.get_museum_image_data, name='get-museum-image'),
+    path('dalle/all',
+         views.get_all_dalle_creations, name='all-dalle-creations'),
     path('dalle/<str:user>',
          views.create_art, name='create-art-for-user'),
 
     path('user/add', views.add_user, name='add-user'),
+    path('user/all', views.get_users, name='get-all-users'),
     path('user/<str:user>', views.get_user, name='user'),
 
     # path('pactiv/<str:pk>/edit', views.edit_personal_activity,

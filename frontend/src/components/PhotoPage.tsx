@@ -32,6 +32,7 @@ const BodyStyling: SxProps = {
 
 interface PhotoPageProps {
     photo: PhotoData;
+    user: UserData | null;
     setCurrentPhoto: any;
     refreshPaintings: any;
 }
@@ -70,15 +71,19 @@ const PhotoPage = (props: PhotoPageProps) => {
         <Box>
             <Header currentUser={props.photo.user.toString()} />
             <Grid container spacing={0} alignItems="center" sx={HeaderStyling}>
-                <Grid item xs={1}>
+                <Grid item xs={2}>
                     <Tooltip title="back" placement="top">
                         <IconButton onClick={() => props.setCurrentPhoto(null)}>
                             <ArrowBackIosIcon fontSize="medium" />
                         </IconButton>
                     </Tooltip>
                 </Grid>
-                <Grid item xs={9}>
-                    <Typography variant="h5">{painting?.name}</Typography>
+                <Grid item xs={8}>
+                    <Typography variant="h5">
+                        {props.photo.dalle
+                            ? `${props.user?.name}'s painting`
+                            : painting?.name}
+                    </Typography>
                 </Grid>
                 <Grid item xs={2}>
                     <Tooltip title="delete" placement="top">
@@ -97,26 +102,29 @@ const PhotoPage = (props: PhotoPageProps) => {
                 src={props.photo.dalle ? props.photo.dalle : props.photo.photo}
                 alt="screenshot"
             />
-            {painting ? (
-                <Box sx={BodyStyling}>
-                    <Typography>
-                        <b>Painter:</b>
-                    </Typography>
-                    <Typography sx={{ marginBottom: 2 }}>
-                        {painting?.painter}
-                    </Typography>
-                    <Typography>
-                        <b>Description: </b>
-                    </Typography>
-                    <Typography sx={{ marginBottom: 2 }}>
-                        {painting?.description}
-                    </Typography>
-                    <Typography>
-                        <b>Tags: </b>
-                    </Typography>
-                    <Typography>{painting?.tags}</Typography>
-                </Box>
-            ) : null}
+            <Box sx={BodyStyling}>
+                <Typography>
+                    <b>Painter:</b>
+                </Typography>
+                <Typography sx={{ marginBottom: 2 }}>
+                    {props.photo.dalle ? props.user?.name : painting?.painter}
+                </Typography>
+                <Typography>
+                    <b>Description: </b>
+                </Typography>
+                <Typography sx={{ marginBottom: 2 }}>
+                    {props.photo.dalle
+                        ? "This is a painting you made by showing your interest in art!"
+                        : painting?.description}
+                </Typography>
+
+                <Typography>
+                    <b> {props.photo.dalle ? "Prompt:" : "Tags:"}</b>
+                </Typography>
+                <Typography>
+                    {props.photo.prompt ? props.photo.prompt : painting?.tags}
+                </Typography>
+            </Box>
         </Box>
     );
 };

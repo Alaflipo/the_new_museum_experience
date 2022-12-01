@@ -14,6 +14,7 @@ from collections import defaultdict
 import openai
 import random
 import json
+from django.db.models import Q
 
 # Create your views here.
 
@@ -22,6 +23,20 @@ import json
 def get_photos_user(request, user):
     photos = Photo.objects.filter(user=user)
     serializer = PhotoSerializer(photos, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_all_dalle_creations(request):
+    dalle_creations = Photo.objects.filter(~Q(dalle=None))
+    serializer = PhotoSerializer(dalle_creations, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_users(request):
+    user = User.objects.all()
+    serializer = UserSerializer(user, many=True)
     return Response(serializer.data)
 
 
@@ -116,7 +131,7 @@ def add_photo(request):
 
 
 def get_dalle_painting(prompt: str):
-    openai.api_key = "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"
+    openai.api_key = "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"
 
     response = openai.Image.create(
         prompt=prompt,
@@ -160,6 +175,7 @@ def create_art(request, user):
         museumphoto=None,
         photo=None,
         dalle=image_url,
+        prompt=prompt,
         date=datetime.datetime.now()
     )
     serializer = PhotoSerializer(photo, many=False)

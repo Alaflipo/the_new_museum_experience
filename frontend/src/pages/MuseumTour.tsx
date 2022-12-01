@@ -101,7 +101,7 @@ const MuseumTour = () => {
                 <Animated.View style={{ opacity: fadeAnimation }}>
                     <Webcam
                         style={{ width: "100%", height: "auto", margin: "0" }}
-                        videoConstraints={{ facingMode: "user" }}
+                        videoConstraints={{ facingMode: "environment" }}
                         ref={webcamRef}
                         mirrored={false}
                         screenshotFormat={"image/jpeg"}

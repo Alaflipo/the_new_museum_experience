@@ -3,19 +3,10 @@ import "./App.css";
 
 import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 import HomeScreen from "./pages/Home";
-import {
-    createTheme,
-    Grid,
-    IconButton,
-    SxProps,
-    ThemeProvider,
-    Tooltip,
-    Typography,
-} from "@mui/material";
-import WallpaperIcon from "@mui/icons-material/Wallpaper";
-import HomeIcon from "@mui/icons-material/Home";
+import { createTheme, ThemeProvider } from "@mui/material";
 import MuseumTour from "./pages/MuseumTour";
 import PhotoGallery from "./pages/PhotoGalery";
+import DalleGallery from "./pages/DalleGallery";
 
 function App() {
     const theme = createTheme({
@@ -52,6 +43,9 @@ function App() {
                                 path={":userId/photo/:photoId"}
                                 element={<PhotoGallery />}
                             />
+                        </Route>
+                        <Route path="/dallegallery">
+                            <Route index element={<DalleGallery />} />
                         </Route>
                     </Routes>
                 </div>

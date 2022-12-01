@@ -17,6 +17,7 @@ export interface PhotoData {
     id?: number, 
     museumphoto?: number, 
     dalle?: string, 
+    prompt?: string, 
     user: number, 
     photo: string, 
     date: string, 

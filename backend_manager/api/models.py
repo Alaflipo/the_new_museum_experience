@@ -28,6 +28,7 @@ class Photo(models.Model):
         MuseumPhoto, on_delete=models.CASCADE, default=1, null=True)
     photo = models.ImageField(null=True, blank=True, upload_to='images/')
     dalle = models.TextField(null=True, default=None)
+    prompt = models.TextField(null=True, default=None)
     date = models.DateTimeField('photo date')
 
     def __str__(self):

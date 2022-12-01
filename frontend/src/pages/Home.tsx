@@ -44,7 +44,7 @@ const HomeScreen = () => {
     };
 
     const HeaderStyling: SxProps = {
-        minHeight: "10vh",
+        minHeight: "15vh",
         display: "flex",
         backgroundColor: "primary.main",
         color: "white",
@@ -62,39 +62,18 @@ const HomeScreen = () => {
                         alignItems="center"
                         sx={HeaderStyling}
                     >
-                        <Grid item xs={2}>
-                            <Tooltip title="home" placement="bottom">
-                                <IconButton
-                                    color="warning"
-                                    component={Link}
-                                    to="/"
-                                >
-                                    <HomeIcon fontSize="medium" />
-                                </IconButton>
-                            </Tooltip>
-                        </Grid>
-                        <Grid item xs={8}>
-                            <Typography variant="h4">
-                                Stedelijk museum
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Tooltip title="gallery" placement="bottom">
-                                <IconButton
-                                    color="warning"
-                                    component={Link}
-                                    to="/"
-                                >
-                                    <WallpaperIcon fontSize="medium" />
-                                </IconButton>
-                            </Tooltip>
+                        <Grid item xs={12}>
+                            <Typography variant="h4">MUS-E</Typography>
                         </Grid>
                     </Grid>
                 </header>
                 <Typography variant="h2" sx={{ height: "20px" }}></Typography>
                 <Typography variant="h2">Welcome!</Typography>
                 <Typography variant="body1" sx={TextStyle}>
-                    Add some information about the webapp here.
+                    You are about to enter our museum! During the museum tour
+                    you can use this App to create your own art based on your
+                    artistic interests. Fill in your name below and start your
+                    journey!
                 </Typography>
                 <TextField
                     label="Name"
@@ -110,7 +89,7 @@ const HomeScreen = () => {
                     sx={{ width: "300px", margin: "10px auto" }}
                     onClick={createUser}
                 >
-                    Start session
+                    Start journey
                 </Button>
             </Stack>
         </div>

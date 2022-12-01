@@ -27,17 +27,26 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 const PhotoGallery = () => {
     const { userId } = useParams(); // to get params out
     const [images, setImages] = useState<Array<PhotoData> | null>(null);
+    const [user, setUser] = useState<UserData | null>(null);
     const [currentImage, setCurrentImage] = useState<PhotoData | null>(null);
     const [load, setLoad] = useState<boolean>(false);
 
     useEffect(() => {
         fetchPhotos();
+        fetchUser();
     }, [userId]);
 
     const fetchPhotos = async () => {
         const request = await fetch(`api/gallery/${userId}`);
         let data: Array<PhotoData> = await request.json();
         setImages(data);
+    };
+
+    const fetchUser = async () => {
+        const request = await fetch(`api/user/${userId}`);
+        let data: UserData = await request.json();
+        setUser(data);
+        console.log(data);
     };
 
     const makePainting = async () => {
@@ -57,13 +66,16 @@ const PhotoGallery = () => {
     return currentImage ? (
         <PhotoPage
             photo={currentImage}
+            user={user}
             setCurrentPhoto={setCurrentImage}
             refreshPaintings={fetchPhotos}
         />
     ) : (
         <Box>
             <Header currentUser={userId ? userId : "0"} />
-            <Paper sx={{ maxHeight: "70vh", overflow: "auto" }}>
+            <Paper
+                sx={{ maxHeight: "70vh", overflow: "auto", boxShadow: "none" }}
+            >
                 <ImageList cols={3} rowHeight={164} sx={{ margin: 1 }}>
                     {images ? (
                         images.map((image) => {
